@@ -9,8 +9,9 @@ public static class CinemaFeedMapper
 {
     public static Result<SeatMap> Map(IReadOnlyList<SeatMapFeedDto>? source)
     {
-        if (source is not [var item] || string.IsNullOrWhiteSpace(item.Auditorium) || string.IsNullOrWhiteSpace(item.FilmTitle) ||
-            !long.TryParse(item.StartTime, out var unixSeconds) || item.SeatRows is null || item.SeatRows.Count == 0)
+        if (source is not [var item]
+            || !long.TryParse(item.StartTime, out var unixSeconds)
+            || item.SeatRows is not { Count: > 0 })
         {
             return Result.Fail<SeatMap>(new InvalidSeatMapError("The upstream seat map does not match the expected contract."));
         }

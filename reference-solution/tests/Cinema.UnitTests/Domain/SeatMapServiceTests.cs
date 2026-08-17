@@ -9,7 +9,7 @@ namespace Cinema.UnitTests.Domain;
 public sealed class SeatMapServiceTests
 {
     [Fact]
-    public async Task GetSeatAsync_LowercaseExistingRow_ReturnsNormalizedSeat()
+    public async Task GetSeatAsyncReturnsNormalizedSeatForLowercaseRow()
     {
         var provider = ProviderWith(new Seat("B", 3, SeatStatus.Available));
         var result = await new SeatMapService(provider).GetSeatAsync("b", 3, CancellationToken.None);
@@ -20,7 +20,7 @@ public sealed class SeatMapServiceTests
     }
 
     [Fact]
-    public async Task GetSeatAsync_MultiCharacterRow_MatchesIgnoringCase()
+    public async Task GetSeatAsyncMatchesMultiCharacterRowIgnoringCase()
     {
         var provider = ProviderWith(new Seat("Balcony", 3, SeatStatus.Available));
 
@@ -32,7 +32,7 @@ public sealed class SeatMapServiceTests
     }
 
     [Fact]
-    public async Task GetSeatAsync_MissingSeat_ReturnsSeatNotFoundError()
+    public async Task GetSeatAsyncReturnsErrorForMissingSeat()
     {
         var provider = ProviderWith(new Seat("A", 1, SeatStatus.Booked));
         var result = await new SeatMapService(provider).GetSeatAsync("A", 2, CancellationToken.None);
@@ -42,7 +42,7 @@ public sealed class SeatMapServiceTests
     }
 
     [Fact]
-    public async Task FindAdjacentSeatsAsync_AvailableRun_ReturnsFirstExactSizeBlock()
+    public async Task FindAdjacentSeatsAsyncReturnsFirstExactSizeBlock()
     {
         var provider = ProviderWith(
             new Seat("A", 1, SeatStatus.Available), new Seat("A", 2, SeatStatus.Available),
@@ -54,7 +54,7 @@ public sealed class SeatMapServiceTests
     }
 
     [Fact]
-    public async Task FindAdjacentSeatsAsync_DoesNotCrossRows()
+    public async Task FindAdjacentSeatsAsyncDoesNotCrossRows()
     {
         var provider = ProviderWith(new Seat("A", 1, SeatStatus.Available), new Seat("B", 1, SeatStatus.Available));
         var result = await new SeatMapService(provider).FindAdjacentSeatsAsync(2, CancellationToken.None);

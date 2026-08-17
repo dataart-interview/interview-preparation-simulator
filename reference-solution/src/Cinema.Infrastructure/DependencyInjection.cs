@@ -29,6 +29,7 @@ public static class DependencyInjection
             .AddStandardResilienceHandler(options =>
             {
                 options.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(3);
+                options.AttemptTimeout.Timeout = TimeSpan.FromSeconds(1);
                 options.Retry.MaxRetryAttempts = 2;
             });
 

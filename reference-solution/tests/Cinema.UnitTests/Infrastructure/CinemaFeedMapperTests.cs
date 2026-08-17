@@ -6,7 +6,7 @@ namespace Cinema.UnitTests.Infrastructure;
 public sealed class CinemaFeedMapperTests
 {
     [Fact]
-    public void Map_ValidFeed_ExpandsEverySeatInOrdinalOrder()
+    public void MapExpandsValidFeedInOrdinalOrder()
     {
         var source = new[] { new SeatMapFeedDto("Main", "Film", "1753804800", new Dictionary<string, string> { ["B"] = "01", ["A"] = "10" }) };
         var result = CinemaFeedMapper.Map(source);
@@ -20,7 +20,7 @@ public sealed class CinemaFeedMapperTests
     }
 
     [Fact]
-    public void Map_DescriptiveRowLabel_PreservesRow()
+    public void MapPreservesDescriptiveRowLabel()
     {
         var source = new[]
         {
@@ -41,7 +41,7 @@ public sealed class CinemaFeedMapperTests
     [InlineData("")]
     [InlineData("1021")]
     [InlineData("10x1")]
-    public void Map_InvalidSeatRow_ReturnsInvalidSeatMapError(string rowValue)
+    public void MapReturnsErrorForInvalidSeatRow(string rowValue)
     {
         var source = new[] { new SeatMapFeedDto("Main", "Film", "1753804800", new Dictionary<string, string> { ["A"] = rowValue }) };
         var result = CinemaFeedMapper.Map(source);
