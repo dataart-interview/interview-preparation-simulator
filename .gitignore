@@ -427,3 +427,8 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Local feedback files
+/feedback/
+/.superpowers/
+.DS_Store
