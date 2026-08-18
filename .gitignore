@@ -433,3 +433,6 @@ FodyWeavers.xsd
 /.superpowers/
 .DS_Store
 /docs/superpowers/
+/candidate-solution/
+/reference-app-plan.md
+/reports/

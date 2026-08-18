@@ -1,20 +1,104 @@
-# Cinema Seat Service Reference Solution
+# Cinema Seat Service – Technical Exercise
 
-This .NET 10 reference implementation isolates upstream feed DTOs, domain models, and public REST contracts. It uses controllers, a typed HTTP client with standard timeout/retry/circuit-breaker handling, a small in-memory cache, ProblemDetails, health checks, OpenAPI, and Scalar.
+## Introduction
 
-## Run locally
+Welcome to the DataArt interview tech challenge. You'll join us for a 90-minute remote session, during which you'll share your screen and lead the implementation of a small HTTP service, while we support and collaborate with you throughout the process. Before you start, please read the guidelines below so you know what we're looking for 🙂
 
-```bash
-dotnet restore Cinema.slnx
-dotnet build Cinema.slnx --configuration Release --no-restore
-dotnet test Cinema.slnx --configuration Release --no-build
-dotnet run --project src/Cinema.Host/Cinema.Host.csproj
+- **RESTful design** – follow the REST API principles for the architecture
+- **Quality over completeness** – clean code, clear naming, sensible tests and iterative refactoring matter more than "finishing".
+- **Think out loud**: we're interested in your reasoning as much as the code you type.
+
+### Traits we love to see:
+
+- idiomatic C#/.NET 10
+- thoughtful API design
+- automated tests (TDD or test‑after – your choice)
+- graceful failure‑handling
+
+It's an "open book" exercise – Google/Stack Overflow are all fine (but not AI). Any IDE or editor is welcome.
+
+Have fun! Treat the interviewer like a teammate – feel free to ask questions or bounce ideas.
+
+Good luck! 🚀
+
+## Scenario
+
+The cinema has one auditorium and is showing a single film at 19:00 tonight. Assume the URL sometimes delays or returns 404. Live seat availability is exposed via our "flaky" upstream API:
+
+https://raw.githubusercontent.com/dataart-interview/interview-technical-exercise-dotnet/main/seatmap-example.json
+
+The response looks like this:
+
+```json
+[{
+  "auditorium": "Main-Hall",
+  "filmTitle":  "Space Odyssey",
+  "startTime":  "1753804800",
+  "seatRows": {
+    "A": "111111",
+    "B": "110000",
+    "C": "11111001",
+    "D": "1111111011",
+  }
+}]
 ```
 
-Open [Scalar](http://localhost:8080/scalar/v1) or [OpenAPI](http://localhost:8080/openapi/v1.json). The service listens on port 8080. Try `GET /api/v1/seat-map`, `GET /api/v1/seats/B/3`, and `GET /api/v1/adjacent-seats?minSeats=2`.
+Each row string is read left → right.
+- `0` = available
+- `1` = booked
 
-The cache reuses a successful response for five seconds and can fall back to that last-known-good map for a further 30 seconds if the upstream feed fails. Cache state stays inside the infrastructure layer and does not change the public response contract. The feed parser accepts its known trailing comma while rejecting unusable content.
+## Your Task
 
-The upstream base address is configured in the `CinemaFeed` section. The known repository path remains private to the typed feed client.
+Create a REST‑style API that lets clients query seat availability.
 
-For containers, run `docker compose up --build` from this directory.
+| Requirement | Details |
+| - | - |
+| **Endpoint for retrieving a map** | Return the entire seat layout converted to an object‑per‑seat structure (see contract below). |
+| **Endpoint for check one seat** | Return a status of one seat by passing a row and a seat number. |
+| **RESTful** | Follow RESTful priciples when designing your API.  |
+| **Resilience** | Implement some resilience techniques so callers remain responsive during transient failures. |
+| **Testing** | Cover the core functionality with unit tests|
+
+## Sample Response Contract
+
+### Get Seat Plan
+
+```json
+{
+  "auditorium": "Main-Hall",
+  "filmTitle": "Space Odyssey",
+  "startTime": "19:00",
+  "seats": [
+    { "row": "A", "number": 1, "status": "booked" },
+    { "row": "A", "number": 2, "status": "booked" },
+    { "row": "A", "number": 3, "status": "booked" },
+    { "row": "B", "number": 1, "status": "booked" },
+    { "row": "B", "number": 2, "status": "booked" },
+    { "row": "B", "number": 3, "status": "available" }
+  ]
+}
+```
+
+### Check a seat (e.g. B3)
+
+```json
+{ "available": true }
+```
+
+## Extension Opportunities
+
+If you complete the core requirements early, feel free to tackle any of these advanced tasks:
+- In-memory cache: If the upstream call fails or times out, serve the most recent copy held in an in‑memory cache with a 3–5 s TTL.
+- Adjacent‑pair finder: Scan each row to find the first sequence of at least minSeats adjacent and unoccupied seats. If such a block exists, return found: true along with the seat range (e.g. seats "B3–B4"). If none are found in any row, return `found: false`.
+- Add some integration tests
+- Provide a **docker-compose.yml** so we can `docker compose up`.
+
+## Notes & Constraints
+
+- Target .NET 10 (or latest LTS). Minimal APIs, MVC controllers or both — your choice. If neccessary, you can also clone a basic API from here: [Link](./NET10/)
+- Hard-code the feed URL, but keep the design flexible for future endpoint replacement.
+- No authentication logic required.
+- Prioritise readability, separation of concerns and meaningful tests — 100% coverage is not required.
+- Use any NuGet packages you'd normally reach for.
+
+Happy coding!
