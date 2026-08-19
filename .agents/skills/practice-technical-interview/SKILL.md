@@ -24,16 +24,19 @@ Inspect candidate repositories read-only for topic selection. Never modify or ex
 
 If the candidate has not already supplied a size, reply only with:
 
-> Choose a session size: **S**, **M**, or **L**  
-> **S** — 10 questions  
-> **M** — 20 questions  
-> **L** — 40 questions
+> Choose a session size: **S**, **M**, or **L**
+> **S** — 15 questions
+> **M** — 30 questions
+> **L** — 50 questions
 
 Do not ask any other setup question. If the candidate already chose S, M, or L, start immediately.
 
 ## Run the session
 
-- Label every prompt `Question N/total — Technical` or `Question N/total — Interview approach` so the candidate knows what kind of answer to practise.
+- Start every prompt with two lines:
+  - `Question N/total`
+  - `Domain: Technical · <specific topic>` or `Domain: Interview approach · <specific topic>`
+  Use a concrete topic such as `HTTP and async`, `Testing`, `API design`, `Delivery`, or `Communication` rather than only the broad group name.
 - Use roughly two technical questions for every interview-approach question. Cover both groups in every size.
 - Ask exactly one question and wait for the answer.
 - After every answer, respond immediately with:

@@ -8,7 +8,7 @@ public static class SeatResponseMapper
     public static SeatMapResponse Map(SeatMap seatMap) => new(
         seatMap.Auditorium,
         seatMap.FilmTitle,
-        seatMap.StartTimeUtc.UtcDateTime.ToString("HH:mm", System.Globalization.CultureInfo.InvariantCulture),
+        TimeOnly.FromDateTime(seatMap.StartTimeUtc.UtcDateTime),
         [.. seatMap.Seats.Select(MapSeat)]);
 
     public static SeatAvailabilityResponse Map(Seat seat) => new(

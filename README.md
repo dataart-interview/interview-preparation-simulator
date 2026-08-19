@@ -31,6 +31,8 @@ The review skill reads your solution and creates one file:
 reports/preparation-notes.md
 ```
 
+When possible, it builds and tests the solution in a disposable copy.
+
 It contains practical technical suggestions, interview-approach suggestions, and a short list of next steps. There are no scores, tiers, pass/fail decisions, or hiring predictions.
 
 ## 3. Practise one question at a time
@@ -50,6 +52,8 @@ You can practise without reviewing a solution first. When preparation notes or i
 - [`.NET best practices`](./docs/dotnet-best-practices.md) provide the technical topics.
 - [`General engineering best practices`](./docs/general-engineering-best-practices.md) provide interview-approach topics such as communication, delivery, debugging, teamwork, and production thinking.
 - [`reference-solution/`](./reference-solution/) shows one complete implementation. It is an example, not an answer key.
+
+The reference solution is deliberately opinionated and more complete than a typical interview submission. Candidates are not expected to reproduce every feature, project boundary, library, or production concern it contains.
 
 The skills are optional. You can simply read both guides, explore the reference solution, and use whichever ideas fit your own constraints.
 

@@ -3,5 +3,5 @@ namespace Cinema.Api.Contracts;
 public sealed record SeatMapResponse(
     string Auditorium,
     string FilmTitle,
-    string StartTime,
+    TimeOnly StartTime,
     IReadOnlyList<SeatContract> Seats);

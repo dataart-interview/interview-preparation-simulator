@@ -183,6 +183,14 @@ Review in this order so cosmetic concerns do not hide fundamental failures:
 
 **Why it matters:** Public execution verifies the assembled application boundary rather than isolated components.
 
+### 2.12 Evolve public contracts deliberately
+
+**Prefer:** Additive changes where possible, stable field meanings and failure semantics, contract tests for important consumers, and a clear versioning or deprecation path when a breaking change is necessary.
+
+**Avoid:** Renaming or removing fields, changing status-code meaning, or silently altering response behaviour without considering existing clients.
+
+**Why it matters:** An API is a shared contract. Safe evolution lets the service improve without forcing unexpected client failures, but versioning is unnecessary when no compatibility requirement exists.
+
 ## 3. Software Architecture and Design
 
 ### 3.1 Use proportionate clean boundaries
