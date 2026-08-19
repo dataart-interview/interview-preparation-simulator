@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="../Cinema.Api/Cinema.Api.csproj" />
+    <ProjectReference Include="../Cinema.Domain/Cinema.Domain.csproj" />
+    <ProjectReference Include="../Cinema.Infrastructure/Cinema.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Scalar.AspNetCore" />
+  </ItemGroup>
+</Project>

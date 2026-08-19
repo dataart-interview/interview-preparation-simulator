@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="src/Cinema.Host/Cinema.Host.csproj" />
+  <Project Path="src/Cinema.Api/Cinema.Api.csproj" />
+  <Project Path="src/Cinema.Domain/Cinema.Domain.csproj" />
+  <Project Path="src/Cinema.Infrastructure/Cinema.Infrastructure.csproj" />
+  <Project Path="tests/Cinema.UnitTests/Cinema.UnitTests.csproj" />
+</Solution>

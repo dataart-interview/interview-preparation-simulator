@@ -1,0 +1,9 @@
+services:
+  cinema-seat-service:
+    build:
+      context: .
+      dockerfile: src/Cinema.Host/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "8080:8080"
